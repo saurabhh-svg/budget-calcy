@@ -23,6 +23,7 @@ function App() {
   const [alert, setAlert] = useState({ show: false });
 
   // ** Functionality **//
+
   const handleCharge = (e) => {
     // console.log(`charge: ${e.target.value}`);
     setCharge(e.target.value);
@@ -31,6 +32,13 @@ function App() {
     // console.log(`amount: ${e.target.value}`);
     setAmount(e.target.value);
   };
+  const handleAlert = ({ type, text }) => {
+    setAlert({ show: true, type, text });
+    setTimeout(() => {
+      setAlert({ show: false });
+    }, 7000);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(charge, amount);
@@ -39,13 +47,18 @@ function App() {
       setExpenses([...expenses, singleExpense]);
       setCharge("");
       setAmount("");
+      handleAlert({ type: "success", text: "Item Added Successfully " });
     } else {
       //handle Alert Called
+      handleAlert({
+        type: "danger",
+        text: `Charge can't be empty value and amount should be greater than 0 `,
+      });
     }
   };
   return (
     <>
-      {alert.show && <Alert type={alert.type} text={alert.text}/>}
+      {alert.show && <Alert type={alert.type} text={alert.text} />}
       <Alert />
       <h1>budget calculator</h1>
       <main className="App">
