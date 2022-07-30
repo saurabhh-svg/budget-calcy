@@ -56,6 +56,19 @@ function App() {
       });
     }
   };
+  //clear all items
+  const clearItems = () => {
+    console.log("cleared all items");
+  };
+  //handle delete
+  const handleDelete = (id) => {
+    console.log(`item deleted : ${id}`);
+  };
+
+  const handleEdit = (id) => {
+    console.log(`item edited  : ${id}`);
+  };
+
   return (
     <>
       {alert.show && <Alert type={alert.type} text={alert.text} />}
@@ -69,7 +82,12 @@ function App() {
           handleCharge={handleCharge}
           handleSubmit={handleSubmit}
         />
-        <ExpenseList expenses={expenses} />
+        <ExpenseList
+          expenses={expenses}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+          clearItems={clearItems}
+        />
       </main>
       <h1>
         Total Spending :
