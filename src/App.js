@@ -15,24 +15,37 @@ function App() {
   //** State Values **//
   //All expenses, add expense
   const [expenses, setExpenses] = useState(intialExpenses);
-  //single expense
+  //single expense//
   const [charge, setCharge] = useState("");
-  //single amount
+  //single amount//
   const [amount, setAmount] = useState("");
+  //Alert
+  const [alert, setAlert] = useState({ show: false });
+
   // ** Functionality **//
   const handleCharge = (e) => {
-    console.log(`charge: ${e.target.value}`);
+    // console.log(`charge: ${e.target.value}`);
     setCharge(e.target.value);
   };
   const handleAmount = (e) => {
-    console.log(`amount: ${e.target.value}`);
+    // console.log(`amount: ${e.target.value}`);
     setAmount(e.target.value);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    // console.log(charge, amount);
+    if (charge !== "" && amount > 0) {
+      const singleExpense = { id: uuid.v4(), charge, amount };
+      setExpenses([...expenses, singleExpense]);
+      setCharge("");
+      setAmount("");
+    } else {
+      //handle Alert Called
+    }
   };
   return (
     <>
+      {alert.show && <Alert type={alert.type} text={alert.text}/>}
       <Alert />
       <h1>budget calculator</h1>
       <main className="App">
@@ -49,7 +62,7 @@ function App() {
         Total Spending :
         <span className="total">
           {expenses.reduce((acc, curr) => {
-            return (acc += curr.amount);
+            return (acc += parseInt(curr.amount));
           }, 0)}
         </span>
       </h1>
